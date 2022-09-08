@@ -1,0 +1,31 @@
+@import '../UI/vars.css';
+
+.wrapper {
+  height: 40px;
+  background-color: var(--color-primary);
+}
+.navbar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  margin: 0px;
+  max-width: 1024px;
+  margin: auto;
+  padding: 0px 20px;
+}
+.title {
+  margin: 0px;
+  color: white;
+}
+.menu {
+  list-style-type: none;
+  display: flex;
+  margin: 0px;
+}
+img {
+  height: 20px;
+  width: 20px;
+  background: white;
+}

@@ -1,0 +1,13 @@
+@import '../vars.css';
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 20px;
+  padding: 12px;
+  border: 2px solid var(--color-primary-light);
+  outline: none;
+}
+.input:focus {
+  border-color: var(--color-primary);
+}

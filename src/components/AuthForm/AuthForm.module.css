@@ -1,0 +1,9 @@
+@import '../UI/vars.css';
+
+p {
+  margin: 0px;
+  font-size: 20px;
+}
+a {
+  color: var(--color-primary);
+}
