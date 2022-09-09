@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import s from './RegisterForm.module.css';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 import Title from '../UI/Title/Title';
 import WhiteBox from '../UI/WhiteBox/WhiteBox';
+import { withNavigation } from '../hocs/withNavigation';
 
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
   state = {
     name: '',
     email: '',
@@ -29,9 +31,14 @@ export default class RegisterForm extends Component {
         }
       );
       const results = await response.json();
+      if (results.status) {
+        this.props.navigate('/auth');
+      } else {
+        alert('Некоректные данные');
+      }
       console.log(results);
     } else {
-      alert('Не заполнены все поля или ');
+      alert('Не заполнены все поля или пароли не совпадают');
     }
   };
   handleChangeName = (e) => {
@@ -48,17 +55,21 @@ export default class RegisterForm extends Component {
   };
   render() {
     return (
-      <WhiteBox>
-        <Title text='Sign up' />
-        <Input placeholder='Name' onChange={this.handleChangeName} />
-        <Input placeholder='Email' onChange={this.handleChangeEmail} />
-        <Input placeholder='Password' onChange={this.handleChangePassword} />
-        <Input
-          placeholder='Confirm password'
-          onChange={this.handleChangePasswordConf}
-        />
-        <Button text='REGISTER' onClick={this.handleClickRegister} />
-      </WhiteBox>
+      <div className={s.wrapper}>
+        <WhiteBox>
+          <Title text='Sign up' />
+          <Input placeholder='Name' onChange={this.handleChangeName} />
+          <Input placeholder='Email' onChange={this.handleChangeEmail} />
+          <Input placeholder='Password' onChange={this.handleChangePassword} />
+          <Input
+            placeholder='Confirm password'
+            onChange={this.handleChangePasswordConf}
+          />
+          <Button text='REGISTER' onClick={this.handleClickRegister} />
+        </WhiteBox>
+      </div>
     );
   }
 }
+
+export default withNavigation(RegisterForm);

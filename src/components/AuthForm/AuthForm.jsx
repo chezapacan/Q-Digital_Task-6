@@ -5,8 +5,9 @@ import Input from '../UI/Input/Input';
 import Title from '../UI/Title/Title';
 import WhiteBox from '../UI/WhiteBox/WhiteBox';
 import { Link } from 'react-router-dom';
+import { withNavigation } from '../hocs/withNavigation';
 
-export default class AuthForm extends Component {
+class AuthForm extends Component {
   state = {
     email: '',
     password: '',
@@ -24,7 +25,14 @@ export default class AuthForm extends Component {
         }
       );
       const results = await response.json();
-      console.log(results);
+      if (results.status) {
+        localStorage.setItem('access_token', results.data.access_token);
+        this.props.navigate('/');
+      } else {
+        alert('Неправильный email или пароль');
+      }
+    } else {
+      alert('Заполните все поля');
     }
   };
   handleChangeEmail = (e) => {
@@ -35,18 +43,22 @@ export default class AuthForm extends Component {
   };
   render() {
     return (
-      <WhiteBox>
-        <Title text='Sign in' />
-        <Input placeholder='Email' onChange={this.handleChangeEmail} />
-        <Input placeholder='Password' onChange={this.handleChangePassword} />
-        <Button text='ENTER' onClick={this.handleClickEnter} />
-        <p>
-          or
-          <span>
-            <Link to='/register'> register</Link>
-          </span>
-        </p>
-      </WhiteBox>
+      <div className={s.wrapper}>
+        <WhiteBox>
+          <Title text='Sign in' />
+          <Input placeholder='Email' onChange={this.handleChangeEmail} />
+          <Input placeholder='Password' onChange={this.handleChangePassword} />
+          <Button text='ENTER' onClick={this.handleClickEnter} />
+          <p>
+            or
+            <span>
+              <Link to='/register'> register</Link>
+            </span>
+          </p>
+        </WhiteBox>
+      </div>
     );
   }
 }
+
+export default withNavigation(AuthForm);

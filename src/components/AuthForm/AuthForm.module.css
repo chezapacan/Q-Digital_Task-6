@@ -7,3 +7,7 @@ p {
 a {
   color: var(--color-primary);
 }
+.wrapper {
+  max-width: 600px;
+  margin: auto;
+}
