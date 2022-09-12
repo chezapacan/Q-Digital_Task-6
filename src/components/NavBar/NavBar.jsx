@@ -10,7 +10,7 @@ export default class NavBar extends Component {
           <Link to='/'>
             <p className={s.title}>Game-test</p>
           </Link>
-          <Link to='/auth'>
+          <Link to={localStorage.getItem('token') ? '/profile' : '/auth'}>
             <img src='/svg/profile.svg' alt='' />
           </Link>
         </div>

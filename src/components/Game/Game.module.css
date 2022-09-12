@@ -1,0 +1,31 @@
+.wrapper {
+  max-width: 600px;
+  margin: auto;
+}
+.options {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.buttonWrapper {
+  width: 50px;
+}
+.textWrapper {
+  display: flex;
+  align-items: center;
+}
+.points {
+  width: 100%;
+  display: flex;
+}
+.tableWrapper {
+  width: 100%;
+}
+.table {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.table:nth-child(2n) {
+  background-color: var(--color-primary-light);
+}

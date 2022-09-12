@@ -7,6 +7,7 @@ export default class Input extends Component {
       <input
         className={s.input}
         placeholder={this.props.placeholder}
+        type={this.props.type}
         onChange={this.props.onChange}
       ></input>
     );

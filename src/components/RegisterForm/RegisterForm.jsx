@@ -5,14 +5,20 @@ import Input from '../UI/Input/Input';
 import Title from '../UI/Title/Title';
 import WhiteBox from '../UI/WhiteBox/WhiteBox';
 import { withNavigation } from '../hocs/withNavigation';
+import Loader from '../UI/Loader/Loader';
 
 class RegisterForm extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+      loading: false,
+    };
+  }
+
   handleClickRegister = async () => {
     if (
       this.state.name &&
@@ -20,6 +26,9 @@ class RegisterForm extends Component {
       this.state.password &&
       this.state.password === this.state.password_confirmation
     ) {
+      this.setState({
+        loading: true,
+      });
       const response = await fetch(
         'https://internsapi.public.osora.ru/api/auth/signup',
         {
@@ -27,45 +36,78 @@ class RegisterForm extends Component {
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
-          body: JSON.stringify(this.state),
+          body: JSON.stringify({
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation,
+          }),
         }
       );
       const results = await response.json();
       if (results.status) {
         this.props.navigate('/auth');
       } else {
-        alert('Некоректные данные');
+        alert(results.errors.email[0]);
       }
-      console.log(results);
+      this.setState({
+        loading: false,
+      });
     } else {
       alert('Не заполнены все поля или пароли не совпадают');
     }
   };
+
   handleChangeName = (e) => {
-    this.state.name = e.target.value;
+    this.setState({
+      name: e.target.value,
+    });
   };
+
   handleChangeEmail = (e) => {
-    this.state.email = e.target.value;
+    this.setState({
+      email: e.target.value,
+    });
   };
+
   handleChangePassword = (e) => {
-    this.state.password = e.target.value;
+    this.setState({
+      password: e.target.value,
+    });
   };
+
   handleChangePasswordConf = (e) => {
-    this.state.password_confirmation = e.target.value;
+    this.setState({
+      password_confirmation: e.target.value,
+    });
   };
+
   render() {
     return (
       <div className={s.wrapper}>
         <WhiteBox>
           <Title text='Sign up' />
           <Input placeholder='Name' onChange={this.handleChangeName} />
-          <Input placeholder='Email' onChange={this.handleChangeEmail} />
-          <Input placeholder='Password' onChange={this.handleChangePassword} />
           <Input
+            type='email'
+            placeholder='Email'
+            onChange={this.handleChangeEmail}
+          />
+          <Input
+            type='password'
+            placeholder='Password'
+            onChange={this.handleChangePassword}
+          />
+          <Input
+            type='password'
             placeholder='Confirm password'
             onChange={this.handleChangePasswordConf}
           />
-          <Button text='REGISTER' onClick={this.handleClickRegister} />
+          {!this.state.loading ? (
+            <Button text='REGISTER' onClick={this.handleClickRegister} />
+          ) : (
+            <Loader />
+          )}
         </WhiteBox>
       </div>
     );

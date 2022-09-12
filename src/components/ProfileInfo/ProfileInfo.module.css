@@ -1,0 +1,14 @@
+@import '../UI/vars.css';
+
+.wrapper {
+  max-width: 600px;
+  margin: auto;
+}
+.points {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.pointsWrapper {
+  display: flex;
+}
