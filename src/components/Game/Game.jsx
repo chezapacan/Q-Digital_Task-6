@@ -84,7 +84,8 @@ class Game extends Component {
 
   timer = () => {
     this.timerCount = setInterval(
-      () => this.setState((prev) => ({ time: prev.time - 1 })),
+      () =>
+        this.setState((prev) => ({ time: prev.time < 1 ? 0 : prev.time - 1 })),
       1000
     );
   };
